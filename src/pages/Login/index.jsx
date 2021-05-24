@@ -8,6 +8,7 @@ import swal from 'sweetalert';
 import { useHistory } from "react-router-dom";
 
 export default function Login ({data}) {
+    localStorage.removeItem('token', '');
     let history = useHistory();
 
     const [user, setAuthEmail] = useState();
@@ -20,10 +21,6 @@ export default function Login ({data}) {
                 email: user, 
                 password: pass
             }
-            // user: {
-            //     email: 'valterdamiani@hotmail.com', 
-            //     password: '123456789'
-            // }
         }
         api.post(`/users/login`, authUser)
         .then(response => {
@@ -33,6 +30,7 @@ export default function Login ({data}) {
          })
          .catch(error => {
             swal(error.message);
+            localStorage.setItem('token', '');
         });
     }
 

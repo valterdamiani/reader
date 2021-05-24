@@ -31,7 +31,7 @@ export default function Register () {
         .then(response => {
             setUpdateUser({response})
             swal("Registered Successfully").then( () => {
-                history.push('/profile');
+                history.push('/');
             });
         })
          .catch(error => {

@@ -6,6 +6,7 @@ import swal from 'sweetalert';
 import {  useHistory } from "react-router-dom";
 
 export default function Register () {
+    localStorage.removeItem('token', '');
     let history = useHistory();
 
     const [username, setUser] = useState();
@@ -14,8 +15,6 @@ export default function Register () {
     const [registerUser, setRegisterUser] = useState();
 
     function sendData () {
-        console.log('chamou');
-
         const registerUser = {
             user: {
                 username: username, 
@@ -27,14 +26,14 @@ export default function Register () {
         api.post(`/users`, registerUser)
         .then(response => {
             setRegisterUser({response})
-            localStorage.setItem('token', response.data.token)
-            console.log('rep', response.data.token);
+            localStorage.setItem('token', response.data.token);
             swal("Registered Successfully").then( () => {
                 history.push('/login');
             });
         })
          .catch(error => {
             swal(error.message);
+            localStorage.removeItem('token', "");
         });
     }
 
